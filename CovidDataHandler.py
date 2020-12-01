@@ -17,6 +17,22 @@ class CovidDataHandler:
         
         return data_list
 
+    def get_state_data_list(self, state, key):
+        """
+        The purpose of this function is to give a key name and return a list of all data values for that key for a specific state.
+        Requires a list of dictionaries that have state data
+        """
+        data_list = []
+        for item in self.data_dict:
+            if item["state"] == state:
+                if item[key] == None:
+                    data_list.append(0)
+                else:
+                    data_list.append(item[key]) 
+        
+        return data_list
+
+
     def get_sum_two_lists(self, key1, key2):
         """
         return a list made of the sum of two data points from the covid tracking project data
@@ -29,6 +45,23 @@ class CovidDataHandler:
                 item[key2] = 0
             else:
                 data_list.append(item[key1] + item[key2])
+        
+        return data_list
+
+    def get_state_sum_two_lists(self, state, key1, key2):
+        """
+        return a list made of the sum of two data points from the covid tracking project data for a particular state
+        Requires a list of dictionaries that have state data
+        """
+        data_list = []
+        for item in self.data_dict:
+            if item["state"] == state:
+                if item[key1] == None:
+                    item[key1] = 0
+                elif item[key2] == None:
+                    item[key2] = 0
+                else:
+                    data_list.append(item[key1] + item[key2])
         
         return data_list
 
@@ -59,4 +92,18 @@ class CovidDataHandler:
             date2con = self.split_date_int(i["date"])
             date = datetime.date(date2con[0], date2con[1], date2con[2])
             date_list.append(date)
+        return date_list
+
+    def get_state_date_list(self, state):
+        """
+        This funciton returns a usable list of dats for plotting
+        Requires a list of dictionaries that have state data
+        """
+        date_list = []
+        
+        for i in self.data_dict:
+            if i["state"] == state:
+                date2con = self.split_date_int(i["date"])
+                date = datetime.date(date2con[0], date2con[1], date2con[2])
+                date_list.append(date)
         return date_list
